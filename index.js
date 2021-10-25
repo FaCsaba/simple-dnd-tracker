@@ -1,7 +1,7 @@
 const Dice = require("dice-notation-js");
 const { Creature, Stats, Weapon } = require("./DNDTools");
 const { Client, Intents, DiscordAPIError, Message } = require("discord.js");
-const { token } = require("./config.json");
+const { token, prefix } = require("./config.json");
 
 // Create a new client instance
 const client = new Client({
@@ -28,8 +28,6 @@ client.on("ready", (_) => {
 	console.log("connected");
 });
 
-prefix = "/";
-
 client.on("messageCreate", async (msg) => {
 	if (!msg.content.startsWith(prefix)) {
 		return;
@@ -39,6 +37,7 @@ client.on("messageCreate", async (msg) => {
 	line = line.match(/(("|').*?("|')|[^"\s]+)(?=\s*|\s*$)/g);
 
 	while (line.length > 0) {
+		// TODO: change from a switch case statement to something more easily maintainable
 		switch (line[0].toLowerCase()) {
 			case "init":
 				line.shift();
@@ -52,7 +51,7 @@ client.on("messageCreate", async (msg) => {
 					// change the dice roll of the selected
 					line[0] = line[0].replace(/'|"/g, "");
 					if (!creatures.get(line[0])) {
-						msg.channel.send(`Unknown creature **${line[0]}**`);
+						msg.channel.send(`Unknown creature **${line[0]}**`); // TODO: exptract this out to an error function
 						line = [];
 						msg.delete();
 						return;
