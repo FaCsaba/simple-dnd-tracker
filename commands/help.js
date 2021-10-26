@@ -1,10 +1,10 @@
 const { send_message, send_error } = require("./sending");
+const { prefix } = require("../config.json");
 
 module.exports.help = function (help_object, kwargs) {
 	if (kwargs[0]) {
 		if (!help_object.parent[kwargs[0]]) {
 			return send_error(
-				msg,
 				`${kwargs[0]} is not a valid command. Type ${prefix}help for commands list`
 			);
 		}

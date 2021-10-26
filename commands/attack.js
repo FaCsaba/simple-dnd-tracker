@@ -21,7 +21,7 @@ module.exports.attack = function (kwargs) {
 	kwargs.shift();
 
 	original_hit = kwargs[0];
-	if (typeof kwargs[0] == "string") {
+	try {
 		to_hit = Dice.detailed(kwargs[0]);
 		to_hit = {
 			result: to_hit.result,
@@ -29,16 +29,21 @@ module.exports.attack = function (kwargs) {
 				to_hit.modifier ? "+" + to_hit.modifier : ""
 			} = ${to_hit.result}`,
 		};
-	} else if (typeof to_hit == "number") {
-		to_hit = { result: Math.floor(kwargs[0]) };
-		to_hit = { result: to_hit.result, pretty_print: `${to_hit}` };
-	} else {
-		return send_error(`${to_hit} is not a number nor a Dice number`);
+	} catch {
+		if (!isNaN(Math.floor(kwargs[0]))) {
+			to_hit = { result: Math.floor(kwargs[0]) };
+			to_hit = {
+				result: to_hit.result,
+				pretty_print: `${to_hit.result}`,
+			};
+		} else {
+			return send_error(`${kwargs[0]} is not a number nor a Dice number`);
+		}
 	}
 	kwargs.shift();
 
 	original_amount = kwargs[0];
-	if (typeof kwargs[0] == "string") {
+	try {
 		amount = Dice.detailed(kwargs[0]);
 		amount = {
 			result: amount.result,
@@ -46,20 +51,27 @@ module.exports.attack = function (kwargs) {
 				amount.modifier ? "+" + amount.modifier : ""
 			} = ${amount.result}`,
 		};
-	} else if (typeof amount == "number") {
-		amount = { result: Math.floor(kwargs[0]) };
-		amount = { result: amount.result, pretty_print: `${amount.result}` };
-	} else {
-		return send_error(`${amount} is not a number nor a Dice number`);
+	} catch {
+		if (!isNaN(Math.floor(kwargs[0]))) {
+			amount = { result: Math.floor(kwargs[0]) };
+			amount = {
+				result: amount.result,
+				pretty_print: `${amount.result}`,
+			};
+		} else {
+			return send_error(`${kwargs[0]} is not a number nor a Dice number`);
+		}
 	}
 	kwargs.shift();
 
 	if (attacked.stats.ac < to_hit.result) {
 		attacked.get_damaged(amount.result);
 		return send_message(
-			`Rolled a ${to_hit.pretty_print}:\nIt's a hit!\n${attacked.name} got damaged ${amount.pretty_print}hp`
+			`Rolled a ${to_hit.pretty_print}:\nIt's a hit!\n${attacked.name} got damaged by ${amount.pretty_print}hp`
 		);
 	} else {
-		return send_message(`Rolled a ${to_hit.pretty_print}:\nIt's not a hit`);
+		return send_message(
+			`Rolled a ${to_hit.pretty_print}:\nIt's not a hit.`
+		);
 	}
 };

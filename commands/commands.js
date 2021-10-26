@@ -51,6 +51,8 @@ commands.help.parent = commands;
 
 //commands.run("asdf", ["init"]);
 
+module.exports.commands = commands;
+
 module.exports.run_command = function (kwargs) {
 	if (!commands[kwargs[0]]) {
 		return send_error(`${prefix}${kwargs[0]} is not a command`);
