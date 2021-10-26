@@ -15,7 +15,8 @@ Create a config.json file in the root with your discord tokan
 
 ```Json
 {
-    "token": "insert-your-discord-bot-token"
+    "token": "insert-your-discord-bot-token",
+    "prefix": "insert-your-prefered-prefix"
 }
 ```
 
