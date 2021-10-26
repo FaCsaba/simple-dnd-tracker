@@ -1,8 +1,8 @@
 # A simple D&D tracker integrated with discord
 
 <p align="center">
-    ![languages](https://img.shields.io/github/languages/top/FaCsaba/simple-dnd-tracker?style=flat-square)
-    ![status](https://github.com/FaCsaba/simple-dnd-tracker/actions/workflows/main.yml/badge.svg)
+    <img alt="Languages used" src="https://img.shields.io/github/languages/top/FaCsaba/simple-dnd-tracker?style=flat-square">
+    <img alt="Status" src="https://github.com/FaCsaba/simple-dnd-tracker/actions/workflows/main.yml/badge.svg?style=flat-square">
 </p>
 
 ### Dependencies:
