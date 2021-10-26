@@ -11,7 +11,7 @@ module.exports.help = function (help_object, kwargs) {
 		return send_message(
 			`**${help_object.parent[kwargs[0]].name}**:\n${
 				help_object.parent[kwargs[0]].discription_long
-			}\n${help_object.parent[kwargs[0]].usage}`
+			}\n\`\`\`${help_object.parent[kwargs[0]].usage}\`\`\``
 		);
 	}
 

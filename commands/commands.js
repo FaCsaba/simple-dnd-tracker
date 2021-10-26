@@ -1,26 +1,9 @@
 const { prefix } = require("../config.json");
-const { Creature, Stats, Weapon } = require("../DNDTools");
 const { send_error } = require("./sending");
 
 const { attack } = require("./attack");
 const { help } = require("./help");
 const { init } = require("./init");
-
-let p1stats = new Stats(18, 15, 16, 6, 12, 8, 85, 13);
-let p2stats = new Stats(10, 12, 11, 15, 15, 14, 53, 12);
-
-let cobold1 = new Creature("Displacer 1", p1stats);
-let cobold2 = new Creature("Displacer 2", p1stats);
-let mage = new Creature("Mage", p2stats);
-
-let leonstats = new Stats(8, 15, 19, 11, 12, 20, 90, 12);
-let leon = new Creature("Leon", leonstats);
-
-creatures = new Map();
-creatures.set(cobold1.name, cobold1);
-creatures.set(cobold2.name, cobold2);
-creatures.set(mage.name, mage);
-creatures.set(leon.name, leon, true);
 
 commands = {
 	help: {
@@ -29,7 +12,7 @@ commands = {
 		discription: "Shows you this menu.",
 		discription_long:
 			"Shows you this menu. You can optionally provide another command after help to show you more about that command.",
-		usage: `${prefix}**help** [another command]`,
+		usage: `${prefix}help [another command]`,
 		run(kwargs = []) {
 			return help(this, kwargs);
 		},
@@ -40,7 +23,7 @@ commands = {
 		discription: "Rolls for initiative.",
 		discription_long:
 			"Rolls for initiative, optionally you can set what creatures have rolled before.",
-		usage: `${prefix}**init** ..[creature <amount: number>]`,
+		usage: `${prefix}init ..[creature <amount: number>]`,
 		run(kwargs) {
 			return init(kwargs);
 		},
@@ -50,7 +33,7 @@ commands = {
 		discription: "Attacks a creature on your turn.",
 		discription_long:
 			"Attacks a creature on your turn, given the creature to attack, a dice roll or a number to compare against the creatures ac, and the amount of attack you did or will do with a dice roll.",
-		usage: `${prefix}**attack** <who gets attacked: creature> <to hit: Dice roll | number> <amount: Dice roll | number>`,
+		usage: `${prefix}attack <who gets attacked: creature> <to hit: Dice roll | number> <amount: Dice roll | number>`,
 		run(kwargs) {
 			return attack(kwargs);
 		},
@@ -60,7 +43,7 @@ commands = {
 		discription: "Attacks a creature with a weapon",
 		discription_long:
 			"Attacks a creature with a weapon, provided the creature to attack and the weapon. If you are the DM you can also provide the creature to attack with.",
-		usage: `${prefix}**attackwith** <creature to attack | creature to attack with as DM <creature to attack>> <what weapon>`,
+		usage: `${prefix}attackwith <creature to attack | creature to attack with as DM <creature to attack>> <what weapon>`,
 		run(kwargs) {},
 	},
 };

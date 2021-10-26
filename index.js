@@ -1,4 +1,3 @@
-const Dice = require("dice-notation-js");
 const { Client, Intents, DiscordAPIError, Message } = require("discord.js");
 const { token, prefix } = require("./config.json");
 const { run_command } = require("./commands/commands");
@@ -21,8 +20,12 @@ client.on("messageCreate", async (msg) => {
 	line = msg.content.slice(prefix.length).trim();
 	line = line.match(/(("|').*?("|')|[^"\s]+)(?=\s*|\s*$)/g);
 
+	err_message = `Error with ${msg.content}:\n`;
 	returned = run_command(line);
 	msg.delete();
+	if (returned.success == false) {
+		returned.message = err_message + returned.message;
+	}
 	return msg.channel.send(returned.message);
 });
 

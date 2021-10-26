@@ -1,4 +1,6 @@
 const { send_message, send_error } = require("./sending");
+const { creatures } = require("../creatures/creatures");
+const Dice = require("dice-notation-js");
 
 module.exports.init = function (kwargs) {
 	creatures.forEach((creature, _) => {
