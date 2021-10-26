@@ -1,5 +1,10 @@
 # A simple D&D tracker integrated with discord
 
+<p align="center">
+    ![languages](https://img.shields.io/github/languages/top/FaCsaba/simple-dnd-tracker?style=flat-square)
+    ![status](https://github.com/FaCsaba/simple-dnd-tracker/actions/workflows/main.yml/badge.svg)
+</p>
+
 ### Dependencies:
 
 1. discord.js
@@ -37,7 +42,7 @@ Now you can do `node .` and it will automatically start
 -   [ ] A spell commanding another player to do a DC check
 -   [ ] Only rolling initiative for selected creatures
 -   [ ] Permission controlling the commands
--   [ ] Add unit tests to every functionality
+-   [x] Add unit tests to every functionality
 -   [ ] The ability to save gameplay
 -   [ ] A map
 -   [ ] DM: damage someone without having to do an /attack # quality of life
