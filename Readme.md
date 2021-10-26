@@ -15,7 +15,8 @@ Create a config.json file in the root with your discord tokan
 
 ```Json
 {
-    "token": "insert-your-discord-bot-token"
+    "token": "insert-your-discord-bot-token",
+    "prefix": "insert-your-prefered-prefix"
 }
 ```
 
@@ -23,10 +24,10 @@ Now you can do `node .` and it will automatically start
 
 ### Commands:
 
-prefix + "**help**: brings up this menu\n" +
-prefix + "**init** ..[creature <amount: number>]: rolls for initiative, optionally you can set what creatures rolled before\n" +
-prefix + "**attack** <who gets attacked: creature> <to hit: number> <amount: Dice roll | number>: attacks a creature\n" +
-prefix + "**attackwith** <who attacks: creature> <whom: creature> <with what: weapon>: NOT IMPLEMENTED YET"
+-   prefix + **help**: brings up this menu
+-   prefix + **init** ..[creature <amount: number>]: rolls for initiative, optionally you can set what creatures rolled before
+-   prefix + **attack** <who gets attacked: creature> <to hit: number> <amount: Dice roll | number>: attacks a creature
+-   prefix + **attackwith** <who attacks: creature> <whom: creature> <with what: weapon>: NOT IMPLEMENTED YET
 
 ### Features and plans:
 
