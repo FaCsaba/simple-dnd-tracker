@@ -141,6 +141,6 @@ describe("Attack command", () => {
 	test("Attack with incorrect damage", () => {
 		res = run_command(["attack", "Epic McGee", "1d20"]);
 		expect(res).toHaveProperty("success", false);
-		expect(res.message).toMatch(/alsdfh/);
+		expect(res.message).toMatch(/is not a number nor a Dice number/);
 	});
 });
