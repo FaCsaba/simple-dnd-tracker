@@ -13,7 +13,7 @@ commands = {
 		discription_long:
 			"Shows you this menu. You can optionally provide another command after help to show you more about that command.",
 		usage: `${prefix}help [another command]`,
-		run(kwargs = []) {
+		run(kwargs) {
 			return help(this, kwargs);
 		},
 	},

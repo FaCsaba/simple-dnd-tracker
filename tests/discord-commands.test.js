@@ -1,5 +1,12 @@
 const { run_command, commands } = require("../commands/commands");
 
+describe("Command runner", () => {
+	test("Incorrect command", () => {
+		res = run_command(["lasjkdhflahd"]);
+		expect(res).toHaveProperty("success", false);
+	});
+});
+
 describe("Help command", () => {
 	test("help command, no other commands", () => {
 		res = run_command(["help"]);
@@ -82,10 +89,10 @@ describe("Attack command", () => {
 	});
 
 	test("Attack with creature", () => {
-		res = run_command(["attack", "Epic McGee", "101", "1"]);
+		res = run_command(["attack", "Epic McGee", "101", "6d20"]);
 		expect(res).toHaveProperty("success", true);
 		expect(res.message).toMatch(/It's a hit!/);
-		expect(res.message).toMatch(/1hp/);
+		expect(res.message).toMatch(/[1-9]+hp/);
 	});
 
 	test("Attack with creature, unsuccessful hit", () => {
