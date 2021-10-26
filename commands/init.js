@@ -1,5 +1,5 @@
 const { send_message, send_error } = require("./sending");
-const { creatures } = require("../creatures/creatures");
+let { creatures } = require("../creatures/creatures");
 const Dice = require("dice-notation-js");
 
 module.exports.init = function (kwargs) {
@@ -18,9 +18,18 @@ module.exports.init = function (kwargs) {
 			return send_error(`Needs an initiative number`);
 		}
 
-		init = Math.floor(kwargs[1]);
-		if (isNaN(init)) {
-			return send_error(`**${kwargs[1]}** is not a number`);
+		let init;
+		try {
+			Dice.parse(kwargs[1]);
+			init = Dice(kwargs[1]);
+		} catch (e) {
+			if (!isNaN(Math.floor(kwargs[1]))) {
+				init = Math.floor(kwargs[1]);
+			} else {
+				return send_error(
+					`**${kwargs[1]}** is not a number or Dice roll.`
+				);
+			}
 		}
 
 		creatures.get(kwargs[0]).init = init;

@@ -13,7 +13,7 @@ commands = {
 		discription_long:
 			"Shows you this menu. You can optionally provide another command after help to show you more about that command.",
 		usage: `${prefix}help [another command]`,
-		run(kwargs = []) {
+		run(kwargs) {
 			return help(this, kwargs);
 		},
 	},
@@ -50,6 +50,8 @@ commands = {
 commands.help.parent = commands;
 
 //commands.run("asdf", ["init"]);
+
+module.exports.commands = commands;
 
 module.exports.run_command = function (kwargs) {
 	if (!commands[kwargs[0]]) {

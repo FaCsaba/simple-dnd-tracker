@@ -1,19 +1,21 @@
 const { Creature, Stats, Weapon } = require("../DNDTools");
 
-let p1stats = new Stats(18, 15, 16, 6, 12, 8, 85, 13);
-let p2stats = new Stats(10, 12, 11, 15, 15, 14, 53, 12);
+let test_creature_stats_1 = new Stats(10, 10, 10, 10, 10, 10, 10, 10);
+let test_creature_1 = new Creature("test1", test_creature_stats_1);
 
-let cobold1 = new Creature("Displacer 1", p1stats);
-let cobold2 = new Creature("Displacer 2", p1stats);
-let mage = new Creature("Mage", p2stats);
+let test_creature_stats_2 = new Stats(20, 20, 20, 20, 20, 20, 20, 20);
+let test_creature_2 = new Creature("test 2", test_creature_stats_2);
 
-let leonstats = new Stats(8, 15, 19, 11, 12, 20, 90, 12);
-let leon = new Creature("Leon", leonstats);
+let test_creature_stats_3 = new Stats(100, 100, 100, 100, 100, 100, 100, 100);
+let test_creature_3 = new Creature("Epic McGee", test_creature_stats_3);
 
-creatures = new Map();
-creatures.set(cobold1.name, cobold1);
-creatures.set(cobold2.name, cobold2);
-creatures.set(mage.name, mage);
-creatures.set(leon.name, leon, true);
+let epicweapon = new Weapon("Epic weapon", "1d20+4", "1d5", "10");
+test_creature_3.add_weapon(epicweapon);
+
+let creatures = new Map();
+
+creatures.set(test_creature_1.name, test_creature_1);
+creatures.set(test_creature_2.name, test_creature_2);
+creatures.set(test_creature_3.name, test_creature_3);
 
 module.exports.creatures = creatures;

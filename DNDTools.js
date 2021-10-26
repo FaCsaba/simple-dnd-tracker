@@ -32,7 +32,11 @@ module.exports.Stats = class Stats {
 		this.modifiers = this.ability_score.map((as) => {
 			return ability_score_to_mod(as);
 		}); // Iterates through the ability scores and returns the modifiers as an object
-		this.initiative_roll = `1d20+${this.modifiers[ability.DEXTERITY]}`;
+		this.initiative_roll = `1d20${
+			this.modifiers[ability.DEXTERITY] == 0
+				? ""
+				: "+" + this.modifiers[ability.DEXTERITY]
+		}`;
 		this.max_health = max_health;
 		this.ac = ac; // I always forget what this stands for, its Armor Class
 	}
