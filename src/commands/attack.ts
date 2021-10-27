@@ -1,11 +1,11 @@
-const { send_message, send_error } = require("./sending");
-const { creatures } = require("../creatures/creatures");
+import { send_error, send_message } from "../sending";
+let creatures = require("../../creatures/creatures.js")
+
 const Dice = require("dice-notation-js");
 
-// <who gets attacked: creature> <to hit: Dice roll | number> <amount: Dice roll | number>
-module.exports.attack = function (kwargs) {
-	let attacked;
-	if (!kwargs[0]) {
+export function attack (kwargs: string[]) {
+    let attacked;
+    if (!kwargs[0]) {
 		return send_error(
 			`Not enough arguments for attack.\nMaybe look at the help menu for attack`
 		);
@@ -20,9 +20,10 @@ module.exports.attack = function (kwargs) {
 	}
 	kwargs.shift();
 
-	original_hit = kwargs[0];
+	let original_hit = kwargs[0];
+    let to_hit: {result: number, pretty_print: string} = {result: NaN, pretty_print: "This should not happen"};
 	try {
-		to_hit = Dice.detailed(kwargs[0]);
+		let to_hit = Dice.detailed(kwargs[0]);
 		to_hit = {
 			result: to_hit.result,
 			pretty_print: `${original_hit} (${to_hit.rolls})${
@@ -30,8 +31,8 @@ module.exports.attack = function (kwargs) {
 			} = ${to_hit.result}`,
 		};
 	} catch {
-		if (!isNaN(Math.floor(kwargs[0]))) {
-			to_hit = { result: Math.floor(kwargs[0]) };
+		if (!isNaN(Math.floor(kwargs[0] as unknown as number))) {
+			let to_hit = { result: Math.floor(kwargs[0] as unknown as number), pretty_print: "" };
 			to_hit = {
 				result: to_hit.result,
 				pretty_print: `${to_hit.result}`,
@@ -42,9 +43,10 @@ module.exports.attack = function (kwargs) {
 	}
 	kwargs.shift();
 
-	original_amount = kwargs[0];
+	let original_amount = kwargs[0];
+    let amount: {result: number, pretty_print: string} = {result: NaN, pretty_print: "This should not happen"}
 	try {
-		amount = Dice.detailed(kwargs[0]);
+		let amount = Dice.detailed(kwargs[0]);
 		amount = {
 			result: amount.result,
 			pretty_print: `${original_amount} (${amount.rolls})${
@@ -52,8 +54,8 @@ module.exports.attack = function (kwargs) {
 			} = ${amount.result}`,
 		};
 	} catch {
-		if (!isNaN(Math.floor(kwargs[0]))) {
-			amount = { result: Math.floor(kwargs[0]) };
+		if (!isNaN(Math.floor(kwargs[0] as unknown as number))) {
+			amount = { result: Math.floor(kwargs[0] as unknown as number), pretty_print: "" };
 			amount = {
 				result: amount.result,
 				pretty_print: `${amount.result}`,
@@ -74,4 +76,4 @@ module.exports.attack = function (kwargs) {
 			`Rolled a ${to_hit.pretty_print}:\nIt's not a hit.`
 		);
 	}
-};
+}

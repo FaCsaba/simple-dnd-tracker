@@ -1,9 +1,9 @@
-const { send_message, send_error } = require("./sending");
+import { send_message, send_error, ReturnStatus } from "../sending";
 let { creatures } = require("../creatures/creatures");
 const Dice = require("dice-notation-js");
 
-module.exports.init = function (kwargs) {
-	creatures.forEach((creature, _) => {
+export function init (kwargs: string[]): ReturnStatus {
+    creatures.forEach((creature:any, _:any) => {
 		//Does the Dice roll for every creature
 		creature.init = Dice(creature.stats.initiative_roll);
 	});
@@ -23,8 +23,8 @@ module.exports.init = function (kwargs) {
 			Dice.parse(kwargs[1]);
 			init = Dice(kwargs[1]);
 		} catch (e) {
-			if (!isNaN(Math.floor(kwargs[1]))) {
-				init = Math.floor(kwargs[1]);
+			if (!isNaN(Math.floor(kwargs[1] as unknown as number))) {
+				init = Math.floor(kwargs[1] as unknown as number) ;
 			} else {
 				return send_error(
 					`**${kwargs[1]}** is not a number or Dice roll.`
@@ -42,11 +42,11 @@ module.exports.init = function (kwargs) {
 		[...creatures.entries()].sort((a, b) => b[1].init - a[1].init)
 	);
 
-	return_message = "";
-	creatures.forEach((creature, _) => {
+	let return_message = "";
+	creatures.forEach((creature: any, _: any) => {
 		return_message = return_message.concat(
 			`${creature.name}: ${creature.init}\n`
 		);
 	});
 	return send_message(return_message);
-};
+}
