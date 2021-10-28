@@ -1,3 +1,9 @@
 config.json
 node_modules
 coverage
+tslint.json
+dist
+.vscode
+*.env
+.*
+!.github

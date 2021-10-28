@@ -2,7 +2,7 @@
 
 <p align="center">
     <img alt="Languages used" src="https://img.shields.io/github/languages/top/FaCsaba/simple-dnd-tracker?style=flat-square">
-    <img alt="Status" src="https://github.com/FaCsaba/simple-dnd-tracker/actions/workflows/main.yml/badge.svg?style=flat-square">
+    <img alt="Status" src="https://img.shields.io/github/workflow/status/FaCsaba/simple-dnd-tracker/CI?label=tests%3A&style=flat-square">
 </p>
 
 ### Dependencies:
@@ -18,11 +18,9 @@ Just `git clone` this repo and `npm i`
 
 Create a config.json file in the root with your discord tokan
 
-```Json
-{
-    "token": "insert-your-discord-bot-token",
-    "prefix": "insert-your-prefered-prefix"
-}
+```Env
+TOKEN="insert-your-discord-bot-token-here"
+PREFIX="insert-your-preferred-prefix"
 ```
 
 Now you can do `node .` and it will automatically start
@@ -35,6 +33,7 @@ Now you can do `node .` and it will automatically start
 -   prefix + **attackwith** <who attacks: creature> <whom: creature> <with what: weapon>: NOT IMPLEMENTED YET
 
 ### Features and plans:
+Everything here is subject to change.
 
 -   [x] Rolling for initiative for every creature
 -   [x] Attacking someone with a specified amount

@@ -14,5 +14,8 @@ jobs:
     - name: Install modules
       run: npm ci
 
+    - name: Build typescript files
+      run: npm run build
+
     - name: Run tests
       run: npm run test
