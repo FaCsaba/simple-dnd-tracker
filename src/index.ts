@@ -1,5 +1,4 @@
 import { Client, Intents, Message } from "discord.js";
-import { run_command } from "./commands/commands";
 import { messageHandler } from "./Handlers";
 
 const client = new Client({

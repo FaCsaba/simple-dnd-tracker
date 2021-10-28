@@ -7,7 +7,7 @@ interface AbilityScore {
     Charisma: number
 }
 
-function ability_score_to_mod(ability_score: AbilityScore): AbilityScore {
+function abilityScoreToModifier(ability_score: AbilityScore): AbilityScore {
 	let modifiers: AbilityScore
     modifiers = {
         Strength: NaN,
@@ -55,12 +55,35 @@ let stats_config: StatsConfig = {
 
 type Dice = string;
 
-interface Entites {
-    weapons: [],
-    creatures: Creature[],
-    
+interface Spells {}
 
+class Entities {
+    weapons: Map <string, Weapon>
+    creatures: Map<string, Creature>
+    stats: Map<string, StatsConfig>
+    spells: Map<string, Spells>
+    constructor () {
+        this.weapons = new Map;
+        this.creatures = new Map;
+        this.stats = new Map;
+        this.spells = new Map;
+    }
+    getCreature(creatureName: string): Creature{
+        return this.creatures.get(creatureName) as Creature
+    }
+
+    showAllCreatures(): string {
+        if (this.creatures.size < 1) {
+            return "There are no creatures"
+        }
+        let Names: string = "Creatures: "
+        this.creatures.forEach((name, _) => {
+            Names = Names.concat(`${name} `)
+        })
+        return Names;
+    }
 }
+
 
 interface Weapon {
     name: string
@@ -77,33 +100,51 @@ class Creature {
     ability_score: AbilityScore
     ability_modifier: AbilityScore
     max_health: number
+    hp: number
     ac: number
     initiative_roll: string
+    damage_delt: {total: number, amounts: number[]}
+    damage_receaved: {total: number, amounts: number[]}
     weapons: Map<string, Weapon>
-
+    init: number
+    
     private _is_player: boolean | undefined
-    private _init: number
     
     constructor(name: string, stats_config: StatsConfig, is_player?: boolean) {
         this.name = name;
         this.ability_score = stats_config.ability_score;
-        this.ability_modifier = ability_score_to_mod(this.ability_score);
+        this.ability_modifier = abilityScoreToModifier(this.ability_score);
         this.max_health = stats_config.max_health;
+        this.hp = this.max_health;
         this.ac = stats_config.ac;
-        this._is_player = is_player;
-        this._init = NaN;
+        this.damage_delt = {total: 0, amounts: []};
+        this.damage_receaved = {total: 0, amounts: []};
         this.weapons = new Map;
 
-        this.initiative_roll = `1d20${
-			this.ability_modifier.Dexterity == 0
-				? ""
-				: "+" + this.ability_modifier.Dexterity
-		}`
-    }
+        this._is_player = is_player;
+        this.init = NaN;
+        
+        this.initiative_roll = `1d20+${this.ability_modifier.Dexterity}`;
 
+        entities.creatures.set(this.name, this);
+    };
+    
     add_weapon(weapon: Weapon) {
         weapon.owner = this;
         this.weapons.set(weapon.name, weapon);
+    };
+    
+    damage_creature(another_creature: Creature, amount: number): void {
+        this.damage_delt.amounts.push(amount);
+        this.damage_delt.total += amount;
+        another_creature.get_damaged(amount);
+    }
+
+    get_damaged(amount: number): void {
+        this.damage_receaved.amounts.push(amount);
+        this.damage_receaved.total += amount;
+        this.hp - amount;
     }
 }
 
+export let entities = new Entities()

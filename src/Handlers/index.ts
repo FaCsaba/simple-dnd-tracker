@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { run_command } from "../commands/commands";
+import { run_command } from "../commands";
 require('dotenv').config();
 let prefix = typeof process.env.PREFIX == "string" ? process.env.PREFIX : "/" ;
 let clientId = process.env.CLIENTID

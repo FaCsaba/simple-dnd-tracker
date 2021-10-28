@@ -11,7 +11,7 @@
   "author": "Raq",
   "license": "ISC",
   "dependencies": {
-    "dice-notation-js": "^1.0.3",
+    "dice-typescript": "^1.6.1",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0"
   },
