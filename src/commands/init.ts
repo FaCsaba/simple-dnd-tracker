@@ -1,8 +1,7 @@
 import { send_message, send_error, ReturnStatus } from '../sending';
-import { entities } from '../entities/';
+import { entities, Creature } from '../entities/';
 
-import {Dice} from "dice-typescript";
-import { Creature } from '../entities/index';
+import { Dice } from "dice-typescript";
 import { diceNumberOrError } from './dice-checking';
 const dice = new Dice();
 

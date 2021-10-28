@@ -8,26 +8,22 @@ function replace_prefix(usage: string): string {
     return usage.replace(/\$\{prefix\}/, `${prefix}`)
 }
 
-interface command_disc {
-    name: string
-    discription_long: string
-    usage: string
-}
+
 
 export function help (kwargs: string[]): ReturnStatus {
-    while (kwargs[0]) {
-        let command = kwargs[0] 
-        kwargs.shift();
-        if (!(command in commands)) {
+    if (kwargs[0]) {
+        if (!(kwargs[0] in commands)) {
             return send_error(
-                `${command} is not a valid command. Type ${prefix}help for commands list`
+                `${kwargs[0]} is not a valid command. Type ${prefix}help for commands list`
             );
         }
-        return send_message(
-            `**${((commands as any)[command] as command_disc).name}**:\n${
-                ((commands as any)[command] as command_disc).discription_long
-            }\n\`\`\`${replace_prefix(((commands as any)[command] as command_disc).usage)}\`\`\``
-        );
+        if (kwargs[0] in commands){
+            return send_message(
+                `**${(commands as any)[kwargs[0]].name}**:\n${
+                    (commands as any)[kwargs[0]].discription_long
+                }\n\`\`\`${(commands as any)[kwargs[0]].usage}\`\`\``
+            );
+        }
     }
     
     let return_message: string = "**Help menu:**\n"; 
