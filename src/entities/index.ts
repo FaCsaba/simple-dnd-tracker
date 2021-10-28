@@ -24,7 +24,6 @@ function abilityScoreToModifier(ability_score: AbilityScore): AbilityScore {
             (modifiers as any)[key] = Math.floor((value - 10) / 2);
             (modifiers as AbilityScore);
         }
-        console.log(key, value);
       })
 
 
@@ -40,7 +39,7 @@ interface StatsConfig {
     ac: number
 }
 
-let stats_config: StatsConfig = {
+let test_stat: StatsConfig = {
     ability_score: {
         Strength: 1,
         Dexterity: 2,
@@ -52,6 +51,7 @@ let stats_config: StatsConfig = {
     max_health: 59,
     ac: 13
 }
+
 
 type Dice = string;
 
@@ -69,7 +69,9 @@ class Entities {
         this.spells = new Map;
     }
     getCreature(creatureName: string): Creature{
-        return this.creatures.get(creatureName) as Creature
+        if (this.creatures.has(creatureName))
+            return this.creatures.get(creatureName) as Creature
+        else throw new Error("Creature not found! Did you forget to check if creature exists?");
     }
 
     showAllCreatures(): string {
@@ -77,13 +79,18 @@ class Entities {
             return "There are no creatures"
         }
         let Names: string = "Creatures: "
-        this.creatures.forEach((name, _) => {
+        this.creatures.forEach((_, name) => {
             Names = Names.concat(`${name} `)
         })
         return Names;
     }
+
+    save() {
+
+    }
 }
 
+export let entities = new Entities()
 
 interface Weapon {
     name: string
@@ -95,7 +102,7 @@ interface Weapon {
     radios?: number
 }
 
-class Creature {
+export class Creature {
     name: string
     ability_score: AbilityScore
     ability_modifier: AbilityScore
@@ -124,8 +131,9 @@ class Creature {
         this._is_player = is_player;
         this.init = NaN;
         
-        this.initiative_roll = `1d20+${this.ability_modifier.Dexterity}`;
+        this.initiative_roll = `1d20+(${this.ability_modifier.Dexterity})`;
 
+        if (entities.creatures.has(this.name)) {throw new Error("Can not have two creatures with the same name, this is a bug, did you forget to check for this?")};
         entities.creatures.set(this.name, this);
     };
     
@@ -147,4 +155,7 @@ class Creature {
     }
 }
 
-export let entities = new Entities()
+if (process.env.NODE_ENV === "test") {
+    new Creature("test", test_stat, false);
+    new Creature("test1", test_stat, true);
+}

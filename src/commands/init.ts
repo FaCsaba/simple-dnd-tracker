@@ -1,7 +1,9 @@
 import { send_message, send_error, ReturnStatus } from '../sending';
-import { entities } from '../creatures/entities';
+import { entities } from '../entities/';
 
 import {Dice} from "dice-typescript";
+import { Creature } from '../entities/index';
+import { diceNumberOrError } from './dice-checking';
 const dice = new Dice();
 
 export function init (kwargs: string[]): ReturnStatus {
@@ -9,9 +11,9 @@ export function init (kwargs: string[]): ReturnStatus {
 		return send_message("There are no creatures")
 	}
 
-    entities.creatures.forEach((creature:any, _:any) => {
+    entities.creatures.forEach((creature: Creature, _:any) => {
 		//Does the Dice roll for every creature
-		creature.init = dice.roll(creature.stats.initiative_roll).total;
+		creature.init = dice.roll(creature.initiative_roll).total;
 	});
 
 	while (kwargs[0]) {
@@ -24,20 +26,10 @@ export function init (kwargs: string[]): ReturnStatus {
 			return send_error(`Needs an initiative number`);
 		}
 
-		let init;
-		try {
-			init = dice.roll(kwargs[1]).total;
-		} catch (e) {
-			if (!isNaN(Math.floor(kwargs[1] as unknown as number))) {
-				init = Math.floor(kwargs[1] as unknown as number) ;
-			} else {
-				return send_error(
-					`**${kwargs[1]}** is not a number or Dice roll.`
-				);
-			}
-		}
-
-		entities.getCreature(kwargs[0]).init = init;
+		let init = diceNumberOrError(kwargs[1]).total;
+		if (init)
+			entities.getCreature(kwargs[0]).init = init;
+		else {return send_error(`__${kwargs[1]}__ is not a number or Dice number.`)}
 		kwargs.shift();
 		kwargs.shift();
 	}
@@ -47,11 +39,12 @@ export function init (kwargs: string[]): ReturnStatus {
 		[...entities.creatures.entries()].sort((a, b) => b[1].init - a[1].init)
 	);
 
-	let return_message = "";
-	entities.creatures.forEach((creature: any, _: any) => {
+	let return_message = "\`\`\`Creature Initiative\n";
+	entities.creatures.forEach((creature: Creature, _: any) => {
 		return_message = return_message.concat(
 			`${creature.name}: ${creature.init}\n`
 		);
 	});
+	return_message = return_message.concat("\`\`\`")
 	return send_message(return_message);
 }

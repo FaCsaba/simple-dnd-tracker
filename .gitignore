@@ -4,3 +4,6 @@ coverage
 tslint.json
 dist
 .vscode
+*.env
+.*
+!.github

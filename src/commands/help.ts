@@ -1,6 +1,7 @@
 import { send_error, send_message, ReturnStatus } from '../sending';
+import * as commands from './command-discriptions.json';
 require('dotenv').config();
-const commands: JSON = require("./command-discriptions.json");
+
 let prefix = process.env.PREFIX;
 
 function replace_prefix(usage: string): string {
@@ -31,7 +32,8 @@ export function help (kwargs: string[]): ReturnStatus {
     
     let return_message: string = "**Help menu:**\n"; 
     Object.values(commands).forEach(command_disc => {
-        return_message = return_message.concat(`${replace_prefix(command_disc.usage)}: ${command_disc.discription}\n`)
+        if (command_disc.usage)
+            return_message = return_message.concat(`${replace_prefix(command_disc.usage)}: ${command_disc.discription}\n`);
     });
     return send_message(return_message)
 }
